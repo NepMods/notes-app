@@ -4,7 +4,7 @@ import 'package:notes/EncryptedDatabase/EncryptedDatabase.dart';
 import 'package:notes/Models/note.dart';
 
 String apiUrl(String endPoint) {
-  return 'http://192.168.1.67:3000/$endPoint';
+  return 'https://notes-app-backend-4qy9.onrender.com/$endPoint';
 }
 
 class ApiResponse {
