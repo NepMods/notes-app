@@ -99,6 +99,7 @@ class _NoteEditState extends State<NoteEdit> {
         child: Icon(Icons.save),
       ),
       appBar: AppBar(
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: save),
         title: TextField(
           controller: title,
@@ -109,17 +110,20 @@ class _NoteEditState extends State<NoteEdit> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.05,
-          top: MediaQuery.of(context).size.height * 0.02,
+        
+        padding: EdgeInsets.all(
+           MediaQuery.of(context).size.height * 0.02,
         ),
         child: Container(
+          decoration: BoxDecoration(border: Border.all(color: Theme.of(context).colorScheme.onSecondary), borderRadius: BorderRadius.circular(7)),
           height: double.infinity,
           child: TextField(
             controller: body,
             maxLines: null,
             textDirection: TextDirection.ltr,
+            textAlign: TextAlign.center,
             decoration: InputDecoration(
+            
               border: InputBorder.none,
               hintText: 'Write your Notes here...',
               hintStyle: TextStyle(fontSize: 13),
