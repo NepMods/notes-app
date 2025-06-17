@@ -18,12 +18,16 @@ class Note extends HiveObject {
   @HiveField(4)
   bool? uploaded;
 
+  @HiveField(5)
+  bool? deleted;
+
   Note({
     required this.title,
     required this.body,
     required this.id,
     this.edited,
     this.uploaded,
+    this.deleted,
   });
 }
 
@@ -41,6 +45,7 @@ class NoteAdapter extends TypeAdapter<Note> {
       id: reader.readString(),
       edited: reader.readBool(),
       uploaded: reader.readBool(),
+      deleted: reader.readBool(),
     );
   }
 
@@ -51,6 +56,7 @@ class NoteAdapter extends TypeAdapter<Note> {
     writer.writeString(obj.id);
     writer.writeBool(obj.edited ?? false);
     writer.writeBool(obj.uploaded ?? false);
+    writer.writeBool(obj.deleted ?? false);
   }
 }
 

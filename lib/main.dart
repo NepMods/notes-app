@@ -69,8 +69,9 @@ class MyApp extends StatelessWidget {
           return Stack(
             children: [
               child!,
-              const Toaster(position: ToastPosition.bottom),
               const LoadingOverlay(),
+
+              const Toaster(offset: 38,),
             ],
           );
         },

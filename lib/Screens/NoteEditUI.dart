@@ -36,7 +36,6 @@ class _NoteEditState extends State<NoteEdit> {
       edited: false,
     );
     if (note.body == "" || note.title == "") {
-      Toast.info(context, "Empty Note, Skipping save");
 
       Navigator.pushNamed(context, "/notes");
       return;
@@ -48,7 +47,6 @@ class _NoteEditState extends State<NoteEdit> {
 
     EncryptedDatabase.instance.write("notesCache", cachedNotes);
 
-    Toast.success(context, "Note added");
     Navigator.pushNamed(context, "/notes");
   }
 
@@ -62,7 +60,6 @@ class _NoteEditState extends State<NoteEdit> {
     );
 
     if (note.body.isEmpty || note.title.isEmpty) {
-      Toast.info(context, "Empty Note, Skipping update");
 
       Navigator.pushNamed(context, "/notes");
       return;
@@ -79,7 +76,6 @@ class _NoteEditState extends State<NoteEdit> {
       }
     }
     EncryptedDatabase.instance.write("notesCache", cachedNotes);
-    Toast.success(context, "Note updated");
     Navigator.pushNamed(context, "/notes");
   }
 
