@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes/Api/api.dart';
+import 'package:notes/EncryptedDatabase/EncryptedDatabase.dart';
 import 'package:notes/Models/note.dart';
 import 'package:sonner_flutter/sonner_flutter.dart';
 
@@ -27,44 +28,59 @@ class _NoteEditState extends State<NoteEdit> {
   }
 
   Future<void> add() async {
-    final note = new Note();
-    note.title = title.text;
-    note.body = body.text;
+    final note = new Note(
+      title: title.text,
+      body: body.text,
+      id: "",
+      uploaded: false,
+      edited: false,
+    );
     if (note.body == "" || note.title == "") {
       Toast.info(context, "Empty Note, Skipping save");
 
-      Navigator.pop(context);
+      Navigator.pushNamed(context, "/notes");
       return;
     }
 
-    final adddone = await addNote(note);
-    if (adddone.status) {
-      Toast.success(context, "Note added");
-      Navigator.pop(context);
-    } else {
-      Toast.error(context, adddone.message);
-    }
+    final rawList = EncryptedDatabase.instance.read("notesCache");
+    List<Note> cachedNotes = rawList.cast<Note>();
+    cachedNotes.add(note);
+
+    EncryptedDatabase.instance.write("notesCache", cachedNotes);
+
+    Toast.success(context, "Note added");
+    Navigator.pushNamed(context, "/notes");
   }
 
   Future<void> update() async {
-    final note = new Note();
-    note.title = title.text;
-    note.body = body.text;
-    note.id = widget.editingNote!.id;
-    if (note.body.isEmpty || note.title.isEmpty || note.id.isEmpty) {
+    final note = new Note(
+      title: title.text,
+      body: body.text,
+      id: widget.editingNote!.id,
+      uploaded: false,
+      edited: true,
+    );
+
+    if (note.body.isEmpty || note.title.isEmpty) {
       Toast.info(context, "Empty Note, Skipping update");
 
-      Navigator.pop(context);
+      Navigator.pushNamed(context, "/notes");
       return;
     }
 
-    final adddone = await updateNote(note);
-    if (adddone.status) {
-      Toast.success(context, "Note updated");
-      Navigator.pop(context);
-    } else {
-      Toast.error(context, adddone.message);
+    final rawList = EncryptedDatabase.instance.read("notesCache");
+    List<Note> cachedNotes = rawList.cast<Note>();
+
+    for (Note note in cachedNotes) {
+      if (note.id == widget.editingNote!.id) {
+        note.title = title.text;
+        note.body = body.text;
+        note.edited = true;
+      }
     }
+    EncryptedDatabase.instance.write("notesCache", cachedNotes);
+    Toast.success(context, "Note updated");
+    Navigator.pushNamed(context, "/notes");
   }
 
   Future<void> save() async {

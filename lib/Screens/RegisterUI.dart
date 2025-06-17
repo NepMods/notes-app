@@ -38,9 +38,9 @@ class _RegisterUIState extends State<RegisterUI> {
       );
       if (registerSuccess.status) {
         Toast.success(context, "Register Successful");
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(builder: (builder) => LoginUI()),
+          "/login",
         );
       } else {
         Toast.error(context, registerSuccess.message);
@@ -132,10 +132,7 @@ class _RegisterUIState extends State<RegisterUI> {
               AccountPrompt(
                 onLoginTap:
                     () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginUI()),
-                      ),
+                      Navigator.pushNamed(context, "/login")
                     },
                 promptText: "Have an Account Already?",
                 actionText: "Login",

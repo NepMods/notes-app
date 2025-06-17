@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:notes/Models/note.dart';
 import 'package:path_provider/path_provider.dart';
 
 class EncryptedDatabase {
@@ -11,8 +12,10 @@ class EncryptedDatabase {
   Future<void> init() async {
     final dir = await getApplicationSupportDirectory();
     Hive.init(dir.path);
+
+      Hive.registerAdapter(NoteAdapter());
     box = await Hive.openBox(boxName);
-  }
+    }
 
   Future<void> write(String key, dynamic value) async {
     await box.put(key, value);

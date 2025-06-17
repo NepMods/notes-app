@@ -17,6 +17,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.12.0"
+  auth_wrapper:
+    dependency: "direct main"
+    description:
+      path: "/home/arjun/auth_wrapper"
+      relative: false
+    source: path
+    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:

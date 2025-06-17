@@ -26,7 +26,7 @@ class _LoginUIState extends State<LoginUI> {
   bool obscureText = true;
 
   @override
-  void _register() async {
+  Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       final registerSuccess = await login(
         _emailController.text,
@@ -40,9 +40,9 @@ class _LoginUIState extends State<LoginUI> {
         );
         EncryptedDatabase.instance.write("isLoginDone", true);
         Toast.success(context, "Login Successful");
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(builder: (builder) => Dashboard()),
+          "/notes"
         );
       } else {
         Toast.error(context, registerSuccess.message);
@@ -112,17 +112,16 @@ class _LoginUIState extends State<LoginUI> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.025),
 
               //Sign up button
-              ButtonView(onPressed: () => {_register()}, buttonText: "Login"),
+              ButtonView(
+                onPressed: () async {
+                  await _register();
+                },
+                buttonText: "Login",
+              ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.009),
 
               AccountPrompt(
-                onLoginTap:
-                    () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterUI()),
-                      ),
-                    },
+                onLoginTap: () => {Navigator.pushNamed(context, '/register')},
                 promptText: "Don't have an Account?",
                 actionText: "Register",
               ),

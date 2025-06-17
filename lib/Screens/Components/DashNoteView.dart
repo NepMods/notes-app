@@ -13,8 +13,8 @@ class DashNoteView extends StatelessWidget {
   String sanitizeString(String input) {
     String sanitized = input.replaceAll(RegExp(r'[\r\n]+'), ' ');
 
-    if (sanitized.length > 50) {
-      sanitized = sanitized.substring(0, 50);
+    if (sanitized.length > 20) {
+      sanitized = sanitized.substring(0, 20);
     }
 
     if (sanitized.length < 3) {
@@ -53,25 +53,45 @@ class DashNoteView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
         child: GestureDetector(
-          onTap:() {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NoteEdit(editingNote: note)));
+          onTap: () {
+            Navigator.pushNamed(context, "/addNotes", arguments: note);
           },
           child: Card(
-            
             child: Container(
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(
-                      sanitizeString(note.title),
-          
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          sanitizeString(note.title),
+
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 20,),
+                        Icon(
+                          (note.edited ?? false) || !(note.uploaded ?? true)
+                              ? Icons.sync_problem_outlined
+                              : Icons.check_circle,
+                          color:
+                              (note.edited ?? false) || !(note.uploaded ?? true)
+                                  ? Colors.red
+                                  : Colors.green,
+                        ),
+                      ],
                     ),
                     Text(
                       sanitizeString(note.body),
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
                     ),
                   ],
                 ),
