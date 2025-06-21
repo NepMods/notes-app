@@ -20,10 +20,11 @@ packages:
   auth_wrapper:
     dependency: "direct main"
     description:
-      path: "/home/arjun/auth_wrapper"
-      relative: false
-    source: path
-    version: "0.0.1"
+      name: auth_wrapper
+      sha256: "85f8cf8a713fafd8af5c0fee501367163caffd1e39f925f91769daf82db68192"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   boolean_selector:
     dependency: transitive
     description:
